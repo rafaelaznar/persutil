@@ -1,5 +1,4 @@
 package net.ausiasmarch.persutil.entity;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -36,5 +35,8 @@ public class PallasEntity {
     @Nullable
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaModificacion;
+    @NotNull
+    private boolean publicado;
+
     
 }
