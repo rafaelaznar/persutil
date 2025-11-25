@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import net.ausiasmarch.persutil.entity.GarciaEntity;
 import net.ausiasmarch.persutil.repository.GarciaRepository;
 
+@Service //para que me lo reconozca como servicio
 public class GarciaService {
     
     @Autowired
