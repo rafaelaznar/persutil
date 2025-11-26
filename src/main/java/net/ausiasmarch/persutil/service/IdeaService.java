@@ -12,6 +12,23 @@ import net.ausiasmarch.persutil.repository.IdeaRepository;
 
 @Service
 public class IdeaService {
+    // bulk creation de ideas fake
+    public Long bulkCreate(Long amount) {
+        String[] titulos = {"Idea brillante", "Mejora urgente", "Bug misterioso", "Nueva funcionalidad", "Optimización"};
+        String[] comentarios = {"Comentario de prueba", "Descripción extensa", "Texto aleatorio", "Pendiente de revisión", "Importante"};
+        net.ausiasmarch.persutil.entity.CategoriaEnum[] categorias = net.ausiasmarch.persutil.entity.CategoriaEnum.values();
+        for (long i = 0; i < amount; i++) {
+            IdeaEntity idea = new IdeaEntity();
+            idea.setTitulo(titulos[(int)(Math.random()*titulos.length)] + " " + i);
+            idea.setComentario(comentarios[(int)(Math.random()*comentarios.length)] + " " + i);
+            idea.setCategoria(categorias[(int)(Math.random()*categorias.length)]);
+            idea.setPublico(Math.random() > 0.5);
+            idea.setFechaCreacion(LocalDateTime.now());
+            idea.setFechaModificacion(LocalDateTime.now());
+            oIdeaRepository.save(idea);
+        }
+        return oIdeaRepository.count();
+    }
 
     @Autowired
     IdeaRepository oIdeaRepository;

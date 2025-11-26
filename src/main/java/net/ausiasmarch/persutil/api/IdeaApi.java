@@ -21,6 +21,12 @@ import net.ausiasmarch.persutil.service.IdeaService;
 @RestController
 @RequestMapping("/idea")
 public class IdeaApi {
+    // bulk creation de ideas fake con CORS específico para Angular
+    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+    @PostMapping("/bulk/{amount}")
+    public ResponseEntity<Long> bulkCreate(@PathVariable int amount) {
+        return ResponseEntity.ok(oIdeaService.bulkCreate((long) amount));
+    }
 
     @Autowired
     IdeaService oIdeaService;
