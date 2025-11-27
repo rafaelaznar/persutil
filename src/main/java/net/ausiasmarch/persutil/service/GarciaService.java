@@ -22,47 +22,41 @@ public class GarciaService {
     }
 
     public Long create(GarciaEntity garciaEntity) {
-    garciaEntity.setFechaInicio(LocalDateTime.now());
+        garciaEntity.setFechaInicio(LocalDateTime.now());
 
-    if (garciaEntity.getFechaFinal() == null) {
-        garciaEntity.setFechaFinal(LocalDateTime.now().plusDays(1)); // o valor por defecto
+        if (garciaEntity.getProgreso() == null || garciaEntity.getProgreso().length() < 5) {
+            garciaEntity.setProgreso("Sin progreso");
+        }
+
+        GarciaRepository.save(garciaEntity);
+        return garciaEntity.getId();
     }
-
-    if (garciaEntity.getProgreso() == null || garciaEntity.getProgreso().length() < 5) {
-        garciaEntity.setProgreso("Sin progreso");
-    }
-
-    GarciaRepository.save(garciaEntity);
-    return garciaEntity.getId();
-}
 
 
     public Long update(GarciaEntity garciaEntity) {
-    GarciaEntity existingGarcia = GarciaRepository.findById(garciaEntity.getId())
-            .orElseThrow(() -> new RuntimeException("Blog not found"));
+        GarciaEntity existingGarcia = GarciaRepository.findById(garciaEntity.getId())
+                .orElseThrow(() -> new RuntimeException("Blog not found"));
 
-    existingGarcia.setTitulo(garciaEntity.getTitulo());
-    existingGarcia.setObjetivo(garciaEntity.getObjetivo());
+        existingGarcia.setTitulo(garciaEntity.getTitulo());
+        existingGarcia.setObjetivo(garciaEntity.getObjetivo());
 
-    // Validar progreso mínimo 5 caracteres, o aplicar default
-    if (garciaEntity.getProgreso() != null && garciaEntity.getProgreso().length() >= 5) {
-        existingGarcia.setProgreso(garciaEntity.getProgreso());
-    } else {
-        existingGarcia.setProgreso("Sin progreso"); // o valor por defecto
+        if (garciaEntity.getProgreso() != null && garciaEntity.getProgreso().length() >= 5) {
+            existingGarcia.setProgreso(garciaEntity.getProgreso());
+        } else {
+            existingGarcia.setProgreso("Sin progreso");
+        }
+
+        existingGarcia.setFechaInicio(garciaEntity.getFechaInicio() != null
+                ? garciaEntity.getFechaInicio()
+                : existingGarcia.getFechaInicio());
+
+        existingGarcia.setFechaFinal(garciaEntity.getFechaFinal() != null
+                ? garciaEntity.getFechaFinal()
+                : existingGarcia.getFechaFinal());
+
+        GarciaRepository.save(existingGarcia);
+        return existingGarcia.getId();
     }
-
-    // No sobreescribir fechas si vienen del frontend
-    existingGarcia.setFechaInicio(garciaEntity.getFechaInicio() != null
-            ? garciaEntity.getFechaInicio()
-            : existingGarcia.getFechaInicio());
-
-    existingGarcia.setFechaFinal(garciaEntity.getFechaFinal() != null
-            ? garciaEntity.getFechaFinal()
-            : existingGarcia.getFechaFinal());
-
-    GarciaRepository.save(existingGarcia);
-    return existingGarcia.getId();
-}
 
 
     public Long delete(Long id) {
