@@ -34,6 +34,9 @@ public class GarciaEntity {
     @NotNull
     @Size(min = 5, max = 1000)
     private String objetivo;
+     @NotNull
+    @Size(min = 5, max = 1000)
+    private String progreso;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaInicio;
