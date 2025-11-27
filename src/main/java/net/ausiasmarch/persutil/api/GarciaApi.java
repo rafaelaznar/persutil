@@ -26,6 +26,13 @@ public class GarciaApi {
     @Autowired
     GarciaService GarciaService;
 
+     @GetMapping("/rellena/{numPosts}")
+    public ResponseEntity<Long> rellenaBlog(
+            @PathVariable Long numPosts
+    ) {
+        return ResponseEntity.ok(GarciaService.createRandom(numPosts));
+    }
+
      // ----------------------------CRUD---------------------------------
 
     // obtener post por id
