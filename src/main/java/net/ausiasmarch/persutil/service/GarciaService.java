@@ -24,7 +24,7 @@ public class GarciaService {
     public Long create(GarciaEntity garciaEntity) {
         garciaEntity.setFechaInicio(LocalDateTime.now());
 
-        if (garciaEntity.getProgreso() == null || garciaEntity.getProgreso().length() < 5) {
+        if (garciaEntity.getProgreso() == null || garciaEntity.getProgreso().length() < 3) {
             garciaEntity.setProgreso("Sin progreso");
         }
 
@@ -40,7 +40,7 @@ public class GarciaService {
         existingGarcia.setTitulo(garciaEntity.getTitulo());
         existingGarcia.setObjetivo(garciaEntity.getObjetivo());
 
-        if (garciaEntity.getProgreso() != null && garciaEntity.getProgreso().length() >= 5) {
+        if (garciaEntity.getProgreso() != null && garciaEntity.getProgreso().length() >= 3) {
             existingGarcia.setProgreso(garciaEntity.getProgreso());
         } else {
             existingGarcia.setProgreso("Sin progreso");
