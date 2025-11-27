@@ -118,11 +118,11 @@ public class GarciaService {
             int indiceAleatorio = random.nextInt(TITULOS.length);
 
             GarciaEntity garciaEntity = new GarciaEntity();
-            garciaEntity.setTitulo(TITULOS[indiceAleatorio]); // ❌ Tenías .setTitulo(null)
+            garciaEntity.setTitulo(TITULOS[indiceAleatorio]);
             garciaEntity.setObjetivo(OBJETIVOS[indiceAleatorio]);
-            garciaEntity.setProgreso(PROGRESOS[indiceAleatorio]); // ❌ Era 'true' pero progreso es String
+            garciaEntity.setProgreso(PROGRESOS[indiceAleatorio]);
             garciaEntity.setFechaInicio(LocalDateTime.now());
-            garciaEntity.setFechaFinal(LocalDate.now().plusDays(random.nextInt(90))); // ❌ Era null, pero es @NotNull
+            garciaEntity.setFechaFinal(LocalDate.now().plusDays(random.nextInt(90)));
 
             GarciaRepository.save(garciaEntity);
         }

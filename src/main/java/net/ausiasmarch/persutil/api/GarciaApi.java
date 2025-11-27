@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.persutil.entity.GarciaEntity;
-import net.ausiasmarch.persutil.service.AleatorioService;
 import net.ausiasmarch.persutil.service.GarciaService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
