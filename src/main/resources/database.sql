@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 26-11-2025 a las 10:32:29
--- Versión del servidor: 8.4.6
--- Versión de PHP: 8.2.29
+-- Tiempo de generación: 10-11-2025 a las 11:28:03
+-- Versión del servidor: 8.4.5
+-- Versión de PHP: 8.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,22 +30,6 @@ CREATE TABLE `blog` (
   `fecha_modificacion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `ideas`
---
-
-CREATE TABLE `ideas` (
-  `id` bigint NOT NULL,
-  `titulo` varchar(255) COLLATE utf32_unicode_ci NOT NULL,
-  `comentario` text COLLATE utf32_unicode_ci NOT NULL,
-  `categoria` enum('IDEA','MEJORA','BUG') COLLATE utf32_unicode_ci NOT NULL,
-  `publico` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_modificacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
-
 --
 -- Índices para tablas volcadas
 --
@@ -57,12 +41,6 @@ ALTER TABLE `blog`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `ideas`
---
-ALTER TABLE `ideas`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -71,10 +49,31 @@ ALTER TABLE `ideas`
 --
 ALTER TABLE `blog`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+COMMIT;
 
---
+-- --------------------------------------------------------
+
+-- Estructura de tabla para la tabla `ideas`
+
+CREATE TABLE `ideas` (
+  `id` bigint NOT NULL,
+  `titulo` varchar(255) COLLATE utf32_unicode_ci NOT NULL,
+  `comentario` text COLLATE utf32_unicode_ci NOT NULL,
+  `categoria` enum('IDEA','MEJORA','BUG') COLLATE utf32_unicode_ci NOT NULL,
+  `publico` tinyint(1) NOT NULL DEFAULT '1',
+  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+-- Índices para tablas volcadas
+
+-- Indices de la tabla `ideas`
+ALTER TABLE `ideas`
+  ADD PRIMARY KEY (`id`);
+
+-- AUTO_INCREMENT de las tablas volcadas
+
 -- AUTO_INCREMENT de la tabla `ideas`
---
 ALTER TABLE `ideas`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 COMMIT;
