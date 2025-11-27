@@ -39,10 +39,11 @@ public class CastanyeraEntity {
     private String etiquetas;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime fecha_creacion;
     @Nullable
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime fechaModificacion;
+    private LocalDateTime fecha_modificacion;
+
     @NotNull
     private Boolean publico;
 

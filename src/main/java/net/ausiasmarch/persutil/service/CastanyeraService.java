@@ -90,8 +90,11 @@ public class CastanyeraService {
             }
             oCastanyeraEntity.setEtiquetas(etiquetas);
             // establecer fecha de creación y modificación
-            oCastanyeraEntity.setFechaCreacion(LocalDateTime.now());
-            oCastanyeraEntity.setFechaModificacion(null);
+            oCastanyeraEntity.setFecha_creacion(LocalDateTime.now());
+            // evitar insertar NULL en la columna fecha_modificacion (DB la marca NOT NULL)
+            oCastanyeraEntity.setFecha_modificacion(oCastanyeraEntity.getFecha_creacion());
+            // establecer visibilidad por defecto como pública
+            oCastanyeraEntity.setPublico(true);
             // guardar entity en base de datos
             oCastanyeraRepository.save(oCastanyeraEntity);
         }
@@ -104,8 +107,13 @@ public class CastanyeraService {
     }
 
     public Long create(CastanyeraEntity castanyeraEntity) {
-        castanyeraEntity.setFechaCreacion(LocalDateTime.now());
-        castanyeraEntity.setFechaModificacion(null);
+    castanyeraEntity.setFecha_creacion(LocalDateTime.now());
+    // mantener fecha_modificacion igual a la de creación para evitar NULL en BD
+    castanyeraEntity.setFecha_modificacion(castanyeraEntity.getFecha_creacion());
+        // si no se especifica, por defecto público
+        if (castanyeraEntity.getPublico() == null) {
+            castanyeraEntity.setPublico(true);
+        }
         oCastanyeraRepository.save(castanyeraEntity);
         return castanyeraEntity.getId();
     }
@@ -116,7 +124,11 @@ public class CastanyeraService {
         existingCastanyera.setTitulo(castanyeraEntity.getTitulo());
         existingCastanyera.setContenido(castanyeraEntity.getContenido());
         existingCastanyera.setEtiquetas(castanyeraEntity.getEtiquetas());
-        existingCastanyera.setFechaModificacion(LocalDateTime.now());
+        // actualizar visibilidad si se proporciona
+        if (castanyeraEntity.getPublico() != null) {
+            existingCastanyera.setPublico(castanyeraEntity.getPublico());
+        }
+        existingCastanyera.setFecha_modificacion(LocalDateTime.now());
         oCastanyeraRepository.save(existingCastanyera);
         return existingCastanyera.getId();
     }
