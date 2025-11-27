@@ -59,14 +59,14 @@ COMMIT;
 --
 
 CREATE TABLE `castanyera` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `titulo` varchar(255) NOT NULL,
-  `contenido` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `contenido` longtext CHARACTER SET utf8mb4NOT NULL,
   `fecha_creación` datetime NOT NULL,
   `fecha_modificación` datetime NOT NULL,
   `publico` tinyint(1) NOT NULL,
   `etiquetas` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
 --
 -- Índices para tablas volcadas
@@ -75,8 +75,6 @@ CREATE TABLE `castanyera` (
 --
 -- Indices de la tabla `castanyera`
 --
-ALTER TABLE `castanyera`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -85,6 +83,4 @@ ALTER TABLE `castanyera`
 --
 -- AUTO_INCREMENT de la tabla `castanyera`
 --
-ALTER TABLE `castanyera`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
-COMMIT;
+
