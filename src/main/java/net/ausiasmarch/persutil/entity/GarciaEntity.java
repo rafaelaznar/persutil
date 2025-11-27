@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -36,8 +38,9 @@ public class GarciaEntity {
     @Size(min = 5, max = 1000)
     private String objetivo;
     @NotNull
-    @Size(min = 5, max = 1000)
-    private String progreso;
+    @Min(0)
+    @Max(100)
+    private Integer progreso;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaInicio;
