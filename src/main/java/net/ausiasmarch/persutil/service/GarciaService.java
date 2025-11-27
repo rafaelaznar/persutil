@@ -33,6 +33,7 @@ public class GarciaService {
                 .orElseThrow(() -> new RuntimeException("Blog not found"));
         existingGarcia.setTitulo(garciaEntity.getTitulo());
         existingGarcia.setObjetivo(garciaEntity.getObjetivo());
+        existingGarcia.setProgreso(garciaEntity.getProgreso());
         existingGarcia.setFechaInicio(LocalDateTime.now());
         existingGarcia.setFechaFinal(garciaEntity.getFechaFinal());
         
