@@ -26,14 +26,18 @@ public class GarciaApi {
     @Autowired
     GarciaService GarciaService;
 
-     @GetMapping("/rellena/{numPosts}")
+    @GetMapping("/rellena/{numPosts}")
     public ResponseEntity<Long> rellenaBlog(
-            @PathVariable Long numPosts
-    ) {
+            @PathVariable Long numPosts) {
         return ResponseEntity.ok(GarciaService.createRandom(numPosts));
     }
 
-     // ----------------------------CRUD---------------------------------
+    @PostMapping("/random/{cantidad}")
+    public ResponseEntity<Long> createRandom(@PathVariable Long cantidad) {
+        return ResponseEntity.ok(GarciaService.createRandom(cantidad));
+    }
+
+    // ----------------------------CRUD---------------------------------
 
     // obtener post por id
     @GetMapping("/{id}")
@@ -63,12 +67,12 @@ public class GarciaApi {
     @GetMapping("")
     public ResponseEntity<Page<GarciaEntity>> getPage(Pageable oPageable) {
         return ResponseEntity.ok(GarciaService.getPage(oPageable));
-        
+
     }
 
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
-        return ResponseEntity.ok(GarciaService.count()); 
+        return ResponseEntity.ok(GarciaService.count());
     }
-    
+
 }
