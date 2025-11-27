@@ -22,11 +22,20 @@ public class GarciaService {
     }
 
     public Long create(GarciaEntity garciaEntity) {
-        garciaEntity.setFechaInicio(LocalDateTime.now());
-        garciaEntity.setFechaFinal(null);
-        GarciaRepository.save(garciaEntity);
-        return garciaEntity.getId();
+    garciaEntity.setFechaInicio(LocalDateTime.now());
+
+    if (garciaEntity.getFechaFinal() == null) {
+        garciaEntity.setFechaFinal(LocalDateTime.now().plusDays(1)); // o valor por defecto
     }
+
+    if (garciaEntity.getProgreso() == null || garciaEntity.getProgreso().length() < 5) {
+        garciaEntity.setProgreso("Sin progreso");
+    }
+
+    GarciaRepository.save(garciaEntity);
+    return garciaEntity.getId();
+}
+
 
     public Long update(GarciaEntity garciaEntity) {
     GarciaEntity existingGarcia = GarciaRepository.findById(garciaEntity.getId())
