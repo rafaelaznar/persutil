@@ -34,6 +34,17 @@ public class PallasService {
     };
 
     
+    public Long rellenaBlog(Long numPosts) {
+        for(int i=0; i<numPosts;i++){
+            PallasEntity oPallasEntity = new PallasEntity();
+            oPallasEntity.setTitulo(arrTitulos[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, arrTitulos.length - 1)]);
+            oPallasEntity.setContenido(arrContenidos[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, arrContenidos.length - 1)]);
+            oPallasEntity.setFechaCreacion(LocalDateTime.now());
+            oPallasRepository.save(oPallasEntity);
+        }
+        return numPosts;
+    }
+
     //Crud
     public PallasEntity get(Long id) {
         return oPallasRepository.findById(id)
@@ -64,8 +75,8 @@ public class PallasService {
         existingEntity.setTitulo(pallasEntity.getTitulo());
         existingEntity.setContenido(pallasEntity.getContenido());
         existingEntity.setFechaCreacion(pallasEntity.getFechaCreacion());
-        existingEntity.setFechaModificacion(pallasEntity.getFechaModificacion());
-        
+        existingEntity.setFechaModificacion(LocalDateTime.now());
+        existingEntity.setPublicado(pallasEntity.isPublicado());
         PallasEntity updatedEntity = oPallasRepository.save(existingEntity);
         return updatedEntity.getId();
     }

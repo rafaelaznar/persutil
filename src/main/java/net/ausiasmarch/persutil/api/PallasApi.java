@@ -23,13 +23,18 @@ import net.ausiasmarch.persutil.service.PallasService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/pallask")
+@RequestMapping("/pallas")
 public class PallasApi {
     @Autowired
     PallasService oPallasService;
     //---------------------------Rellenar datos fake blog---------------------------------
 
-    
+    @GetMapping("/rellena/{numPosts}")
+    public ResponseEntity<Long> rellenaBlog(
+            @PathVariable Long numPosts
+    ) {
+        return ResponseEntity.ok(oPallasService.rellenaBlog(numPosts));
+    }
     
     // ----------------------------CRUD---------------------------------
 
