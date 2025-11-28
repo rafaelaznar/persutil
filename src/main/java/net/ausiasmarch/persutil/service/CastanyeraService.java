@@ -22,84 +22,110 @@ public class CastanyeraService {
 
     ArrayList<String> alFrases = new ArrayList<>();
 
+// Función que proporciona títulos
+private ArrayList<String> obtenerTitulos() {
+    ArrayList<String> titulos = new ArrayList<>();
+    titulos.add("Viaje a paris");
+    titulos.add("Escapada a Madrid");
+    titulos.add("Concierto Taylor");
+    titulos.add("Fallas");
+    titulos.add("Festival Mad Cool");
+    titulos.add("Viaje Italia");
+    titulos.add("Concierto Morat");
+    titulos.add("Concierto Blackppink");
+    titulos.add("Visita Museo Reina Sofia");
+    titulos.add("Viaje a Asturias");
+    titulos.add("Escapada a Murcia");
+    return titulos;
+}
 
-    //cambiar todo el tema de esto por publicaciones de lorem ipsus taylor o algo asi
-    public CastanyeraService() {
-        alFrases.add("La vida es bella.");
-        alFrases.add("El conocimiento es poder.");
-        alFrases.add("La perseverancia es la clave del éxito.");
-        alFrases.add("El tiempo es oro.");
-        alFrases.add("La creatividad es la inteligencia divirtiéndose.");
-        alFrases.add("Más vale tarde que nunca.");
-        alFrases.add("El cambio es la única constante en la vida.");
-        alFrases.add("La esperanza es lo último que se pierde.");
-        alFrases.add("La unión hace la fuerza.");
-        alFrases.add("El respeto es la base de toda relación.");
-        alFrases.add("La comunicación es clave en cualquier relación.");
-        alFrases.add("Más vale pájaro en mano que ciento volando.");
-        alFrases.add("A mal tiempo, buena cara.");
-        alFrases.add("El que no arriesga no gana.");
-        alFrases.add("La suerte favorece a los audaces.");
-        alFrases.add("El tiempo lo dirá.");
-    }
+// Función que proporciona contenidos
+private ArrayList<String> obtenerContenidos() {
+    ArrayList<String> contenidos = new ArrayList<>();
+    contenidos.add("Hoy caminé por las orillas del Sena sintiéndome parte de una postal; la Torre Eiffel brilló justo cuando levanté la mirada, como si hubiese estado esperándome.");
+    contenidos.add("Me perdí entre las calles de Malasaña, tomando café sin prisa y disfrutando del bullicio que solo Madrid sabe regalar un sábado cualquiera.");
+    contenidos.add("Anoche canté hasta quedarme sin voz; Taylor hizo que cada canción se sintiera como una confesión compartida entre miles de desconocidos.");
+    contenidos.add("El olor a pólvora lo llenaba todo y, entre mascletás y monumentos ardiendo, sentí que Valencia latía con un ritmo propio e imposible de olvidar.");
+    contenidos.add("Salté entre luces, guitarras y polvo; el Mad Cool fue un torbellino de música que parecía no querer terminar nunca.");
+    contenidos.add("Hoy probé un gelato frente a un callejón empedrado y entendí que Italia no se visita, se saborea, Aunque también visite sitios emblemáticos.");
+    contenidos.add("Morat consiguió que cantaramos cada letra como si contaran nuestras propias historias, y por un momento todos fuimos parte del mismo recuerdo.");
+    contenidos.add("El escenario explotó en rosa y energía; Blackpink hizo temblar el estadio con cada coreografía perfecta. Best GG");
+    contenidos.add("Me quedé un rato largo frente al Guernica, pero como no estudio artes, tampoco entendia demasiado.");
+    contenidos.add("El verde aquí parece más verde que en ningún otro sitio; entre montañas y mar, sentí que el tiempo se hacía amable.");
+    contenidos.add("Caminé por sus plazas soleadas con un paparajote aún caliente en la mano, disfrutando la calma inesperada de la tarde.");
+    return contenidos;
+}
 
-    public Long rellenaCastanyera(Long numPosts) {
-        for (long j = 0; j < numPosts; j++) {
-            // crea entity Castanyera y la rellana con datos aleatorios
-            CastanyeraEntity oCastanyeraEntity = new CastanyeraEntity();
-            oCastanyeraEntity.setTitulo(alFrases.get(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, alFrases.size() - 1)));
-            // rellena contenido
-            String contenidoGenerado = "";
-            int numFrases = oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(1, 30);
-            for (int i = 1; i <= numFrases; i++) {
-                contenidoGenerado += alFrases.get(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, alFrases.size() - 1)) + " ";
-                if (oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 10) == 1) {
-                    contenidoGenerado += "\n";
-                }
-            }
-            oCastanyeraEntity.setContenido(contenidoGenerado.trim());
-            contenidoGenerado += "\n";
-            // extraer 5 palabras aleatorias del contenido  para las etiquetas
-            String[] palabras = contenidoGenerado.split(" ");
-            // eliminar signos de puntuacion de las palabras
-            for (int i = 0; i < palabras.length; i++) {
-                palabras[i] = palabras[i].replace(".", "").replace(",", "").replace(";", "").replace(":", "").replace("!", "").replace("?", "");
-            }
-            // convertir todas las palabras a minúsculas
-            for (int i = 0; i < palabras.length; i++) {
-                palabras[i] = palabras[i].toLowerCase();
-            }
-            // seleccionar palabras de más de 4 letras
-            ArrayList<String> alPalabrasFiltradas = new ArrayList<>();
-            for (String palabra : palabras) {
-                if (palabra.length() > 4 && !alPalabrasFiltradas.contains(palabra)) {
-                    alPalabrasFiltradas.add(palabra);
-                }
-            }
-            palabras = alPalabrasFiltradas.toArray(new String[0]);
-            String etiquetas = "";
-            for (int i = 0; i < 5; i++) {
-                String palabra = palabras[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, palabras.length - 1)];
-                if (!etiquetas.contains(palabra)) {
-                    etiquetas += palabra + ", ";
-                }
-            }
-            // eliminar la última coma y espacio
-            if (etiquetas.endsWith(", ")) {
-                etiquetas = etiquetas.substring(0, etiquetas.length() - 2);
-            }
-            oCastanyeraEntity.setEtiquetas(etiquetas);
-            // establecer fecha de creación y modificación
-            oCastanyeraEntity.setFecha_creacion(LocalDateTime.now());
-            // evitar insertar NULL en la columna fecha_modificacion (DB la marca NOT NULL)
-            oCastanyeraEntity.setFecha_modificacion(oCastanyeraEntity.getFecha_creacion());
-            // establecer visibilidad por defecto como pública
-            oCastanyeraEntity.setPublico(true);
-            // guardar entity en base de datos
-            oCastanyeraRepository.save(oCastanyeraEntity);
+public Long rellenaCastanyera(Long numPosts) {
+    // Obtener listas de títulos y contenidos
+    ArrayList<String> titulos = obtenerTitulos();
+    ArrayList<String> contenidos = obtenerContenidos();
+    
+    for (long j = 0; j < numPosts; j++) {
+        // crea entity Castanyera y la rellena con datos aleatorios
+        CastanyeraEntity oCastanyeraEntity = new CastanyeraEntity();
+        
+        // Generar UN SOLO índice aleatorio para título y contenido
+        int indiceAleatorio = oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, Math.min(titulos.size(), contenidos.size()) - 1);
+        
+        // Usar el mismo índice para título y contenido
+        oCastanyeraEntity.setTitulo(titulos.get(indiceAleatorio));
+        oCastanyeraEntity.setContenido(contenidos.get(indiceAleatorio));
+        
+        // extraer 5 palabras aleatorias del contenido para las etiquetas
+        String contenidoParaEtiquetas = contenidos.get(indiceAleatorio);
+        String[] palabras = contenidoParaEtiquetas.split(" ");
+        
+        // eliminar signos de puntuación de las palabras
+        for (int i = 0; i < palabras.length; i++) {
+            palabras[i] = palabras[i].replace(".", "").replace(",", "").replace(";", "").replace(":", "").replace("!", "").replace("?", "");
         }
-        return oCastanyeraRepository.count();
+        
+        // convertir todas las palabras a minúsculas
+        for (int i = 0; i < palabras.length; i++) {
+            palabras[i] = palabras[i].toLowerCase();
+        }
+        
+        // seleccionar palabras de más de 4 letras
+        ArrayList<String> alPalabrasFiltradas = new ArrayList<>();
+        for (String palabra : palabras) {
+            if (palabra.length() > 4 && !alPalabrasFiltradas.contains(palabra)) {
+                alPalabrasFiltradas.add(palabra);
+            }
+        }
+        
+        palabras = alPalabrasFiltradas.toArray(new String[0]);
+        String etiquetas = "";
+        
+        // Generar hasta 5 etiquetas únicas
+        int numEtiquetas = Math.min(5, palabras.length);
+        for (int i = 0; i < numEtiquetas; i++) {
+            String palabra = palabras[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, palabras.length - 1)];
+            if (!etiquetas.contains(palabra)) {
+                etiquetas += palabra + ", ";
+            }
+        }
+        
+        // eliminar la última coma y espacio
+        if (etiquetas.endsWith(", ")) {
+            etiquetas = etiquetas.substring(0, etiquetas.length() - 2);
+        }
+        oCastanyeraEntity.setEtiquetas(etiquetas);
+        
+        // establecer fecha de creación y modificación
+        oCastanyeraEntity.setFecha_creacion(LocalDateTime.now());
+        // evitar insertar NULL en la columna fecha_modificacion (DB la marca NOT NULL)
+        oCastanyeraEntity.setFecha_modificacion(oCastanyeraEntity.getFecha_creacion());
+        
+        // establecer visibilidad ALEATORIA (público o privado)
+        boolean esPublico = oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1) == 1;
+        oCastanyeraEntity.setPublico(esPublico);
+        
+        // guardar entity en base de datos
+        oCastanyeraRepository.save(oCastanyeraEntity);
     }
+    return oCastanyeraRepository.count();
+}
 
     // ----------------------------CRUD---------------------------------
     public CastanyeraEntity get(Long id) {
