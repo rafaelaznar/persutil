@@ -7,18 +7,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import net.ausiasmarch.persutil.entity.IdeaEntity;
-import net.ausiasmarch.persutil.repository.IdeaRepository;
+import net.ausiasmarch.persutil.entity.FernandezIdeaEntity;
+import net.ausiasmarch.persutil.repository.FernandezIdeaRepository;
 
 @Service
-public class IdeaService {
+public class FernandezIdeaService {
     // bulk creation de ideas fake
     public Long bulkCreate(Long amount) {
         String[] titulos = {"Idea brillante", "Mejora urgente", "Bug misterioso", "Nueva funcionalidad", "Optimización"};
         String[] comentarios = {"Comentario de prueba", "Descripción extensa", "Texto aleatorio", "Pendiente de revisión", "Importante"};
         net.ausiasmarch.persutil.entity.CategoriaEnum[] categorias = net.ausiasmarch.persutil.entity.CategoriaEnum.values();
         for (long i = 0; i < amount; i++) {
-            IdeaEntity idea = new IdeaEntity();
+            FernandezIdeaEntity idea = new FernandezIdeaEntity();
             idea.setTitulo(titulos[(int)(Math.random()*titulos.length)] + " " + i);
             idea.setComentario(comentarios[(int)(Math.random()*comentarios.length)] + " " + i);
             idea.setCategoria(categorias[(int)(Math.random()*categorias.length)]);
@@ -31,15 +31,15 @@ public class IdeaService {
     }
 
     @Autowired
-    IdeaRepository oIdeaRepository;
+    FernandezIdeaRepository oIdeaRepository;
 
     // ----------------------------CRUD---------------------------------
     
-    public IdeaEntity get(Long id) {
+    public FernandezIdeaEntity get(Long id) {
         return oIdeaRepository.findById(id).orElseThrow(() -> new RuntimeException("Idea not found"));
     }
 
-    public Long create(IdeaEntity ideaEntity) {
+    public Long create(FernandezIdeaEntity ideaEntity) {
         ideaEntity.setFechaCreacion(LocalDateTime.now());
         ideaEntity.setFechaModificacion(LocalDateTime.now());
         if (ideaEntity.getPublico() == null) {
@@ -49,8 +49,8 @@ public class IdeaService {
         return ideaEntity.getId();
     }
 
-    public Long update(IdeaEntity ideaEntity) {
-        IdeaEntity existingIdea = oIdeaRepository.findById(ideaEntity.getId())
+    public Long update(FernandezIdeaEntity ideaEntity) {
+        FernandezIdeaEntity existingIdea = oIdeaRepository.findById(ideaEntity.getId())
                 .orElseThrow(() -> new RuntimeException("Idea not found"));
         existingIdea.setTitulo(ideaEntity.getTitulo());
         existingIdea.setComentario(ideaEntity.getComentario());
@@ -66,12 +66,12 @@ public class IdeaService {
         return id;
     }
 
-    public Page<IdeaEntity> getPage(Pageable oPageable) {
+    public Page<FernandezIdeaEntity> getPage(Pageable oPageable) {
         return oIdeaRepository.findAll(oPageable);
     }
 
     // paginacion filtrada por 'publico' (filtra en BD antes de paginar)
-    public org.springframework.data.domain.Page<IdeaEntity> getPageFiltered(int page, int size, Boolean publico, String sort, String direction) {
+    public org.springframework.data.domain.Page<FernandezIdeaEntity> getPageFiltered(int page, int size, Boolean publico, String sort, String direction) {
         org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.fromString(direction), sort));
         if (publico != null) {
             return oIdeaRepository.findByPublico(publico, pageable);

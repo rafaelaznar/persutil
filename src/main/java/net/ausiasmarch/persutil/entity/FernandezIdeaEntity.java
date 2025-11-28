@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class IdeaEntity {
+public class FernandezIdeaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

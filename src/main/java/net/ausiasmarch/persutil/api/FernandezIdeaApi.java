@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.ausiasmarch.persutil.entity.IdeaEntity;
-import net.ausiasmarch.persutil.service.IdeaService;
+import net.ausiasmarch.persutil.entity.FernandezIdeaEntity;
+import net.ausiasmarch.persutil.service.FernandezIdeaService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/idea")
-public class IdeaApi {
+public class FernandezIdeaApi {
     // bulk creation de ideas fake con CORS específico para Angular
     @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
     @PostMapping("/bulk/{amount}")
@@ -29,25 +29,25 @@ public class IdeaApi {
     }
 
     @Autowired
-    IdeaService oIdeaService;
+    FernandezIdeaService oIdeaService;
 
     // ----------------------------CRUD---------------------------------
 
     // obtener idea por id
     @GetMapping("/{id}")
-    public ResponseEntity<IdeaEntity> get(@PathVariable Long id) {
+    public ResponseEntity<FernandezIdeaEntity> get(@PathVariable Long id) {
         return ResponseEntity.ok(oIdeaService.get(id));
     }
 
     // crear idea
     @PostMapping("")
-    public ResponseEntity<Long> create(@RequestBody IdeaEntity ideaEntity) {
+    public ResponseEntity<Long> create(@RequestBody FernandezIdeaEntity ideaEntity) {
         return ResponseEntity.ok(oIdeaService.create(ideaEntity));
     }
 
     // modificar idea
     @PutMapping("")
-    public ResponseEntity<Long> update(@RequestBody IdeaEntity ideaEntity) {
+    public ResponseEntity<Long> update(@RequestBody FernandezIdeaEntity ideaEntity) {
         return ResponseEntity.ok(oIdeaService.update(ideaEntity));
     }
 
@@ -59,7 +59,7 @@ public class IdeaApi {
 
     // listado paginado de ideas (acepta filtro publico)
     @GetMapping("")
-    public ResponseEntity<Page<IdeaEntity>> getPage(
+    public ResponseEntity<Page<FernandezIdeaEntity>> getPage(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "publico", required = false) Boolean publico,
