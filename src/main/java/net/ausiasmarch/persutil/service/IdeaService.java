@@ -70,6 +70,25 @@ public class IdeaService {
         return oIdeaRepository.findAll(oPageable);
     }
 
+    // paginacion filtrada por 'publico' (filtra en BD antes de paginar)
+    public org.springframework.data.domain.Page<IdeaEntity> getPageFiltered(int page, int size, Boolean publico, String sort, String direction) {
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.fromString(direction), sort));
+        if (publico != null) {
+            return oIdeaRepository.findByPublico(publico, pageable);
+        } else {
+            return oIdeaRepository.findAll(pageable);
+        }
+    }
+
+    // contar según filtro publico (si publico == null devuelve count total)
+    public long countFiltered(Boolean publico) {
+        if (publico != null) {
+            return oIdeaRepository.countByPublico(publico);
+        } else {
+            return oIdeaRepository.count();
+        }
+    }
+
     public Long count() {
         return oIdeaRepository.count();
     }

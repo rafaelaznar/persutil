@@ -2,7 +2,7 @@ package net.ausiasmarch.persutil.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,16 +57,35 @@ public class IdeaApi {
         return ResponseEntity.ok(oIdeaService.delete(id));
     }
 
-    // listado paginado de ideas
+    // listado paginado de ideas (acepta filtro publico)
     @GetMapping("")
-    public ResponseEntity<Page<IdeaEntity>> getPage(Pageable oPageable) {
-        return ResponseEntity.ok(oIdeaService.getPage(oPageable));
+    public ResponseEntity<Page<IdeaEntity>> getPage(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "publico", required = false) Boolean publico,
+            @RequestParam(name = "sort", defaultValue = "fechaCreacion") String sort,
+            @RequestParam(name = "direction", required = false) String direction) {
+        // Support both styles:
+        // - frontend sending separate params: sort=fechaCreacion&direction=desc
+        // - frontend sending combined param as Spring usually does: sort=field,dir
+        String sortField = sort;
+        String dir = (direction == null) ? "desc" : direction;
+        if (sort != null && sort.contains(",")) {
+            String[] parts = sort.split(",");
+            if (parts.length > 0) {
+                sortField = parts[0];
+            }
+            if (parts.length > 1) {
+                dir = parts[1];
+            }
+        }
+        return ResponseEntity.ok(oIdeaService.getPageFiltered(page, size, publico, sortField, dir));
     }
 
-    // contar ideas
+    // contar ideas (opcionalmente filtrado por publico)
     @GetMapping("/count")
-    public ResponseEntity<Long> count() {
-        return ResponseEntity.ok(oIdeaService.count()); 
+    public ResponseEntity<Long> count(@RequestParam(name = "publico", required = false) Boolean publico) {
+        return ResponseEntity.ok(oIdeaService.countFiltered(publico));
     }
 
 }
