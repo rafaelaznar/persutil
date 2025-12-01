@@ -19,7 +19,7 @@ import net.ausiasmarch.persutil.service.ContrerasService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")    //ESTO ES PARA SOLUCIONAR EL CORS
 @RestController
-@RequestMapping("/recurso")
+@RequestMapping("/contreras")
 public class ContrerasApi {
 
     @Autowired
