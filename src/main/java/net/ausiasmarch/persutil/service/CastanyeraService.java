@@ -168,8 +168,19 @@ public Long rellenaCastanyera(Long numPosts) {
         return oCastanyeraRepository.findAll(oPageable);
     }
 
+    // obtener página con solo posts públicos
+    public Page<CastanyeraEntity> getPublicPage(Pageable oPageable) {
+        return oCastanyeraRepository.findByPublicoTrue(oPageable);
+    }
+
+    // contar solo posts públicos
+    public Long countPublic() {
+        return oCastanyeraRepository.countByPublicoTrue();
+    }
+
     public Long count() {
         return oCastanyeraRepository.count();
     }
+
 
 }

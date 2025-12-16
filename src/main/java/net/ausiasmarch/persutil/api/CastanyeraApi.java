@@ -75,6 +75,17 @@ public class CastanyeraApi {
         
     }
 
+    // listado paginado de posts públicos
+    @GetMapping("/publicos")
+    public ResponseEntity<Page<CastanyeraEntity>> getPublicPage(Pageable oPageable) {
+        return ResponseEntity.ok(oCastanyeraService.getPublicPage(oPageable));
+    }
+
+    @GetMapping("/publicos/count")
+    public ResponseEntity<Long> countPublic() {
+        return ResponseEntity.ok(oCastanyeraService.countPublic());
+    }
+
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         return ResponseEntity.ok(oCastanyeraService.count()); 
