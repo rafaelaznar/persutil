@@ -14,4 +14,10 @@ public interface CastanyeraRepository extends JpaRepository<CastanyeraEntity, Lo
 	// Contador de entidades públicas
 	long countByPublicoTrue();
 
+	Page<CastanyeraEntity> findByPublicadoTrue(Pageable oPageable);
+
+    Page<CastanyeraEntity> findByPublicadoFalse(Pageable oPageable);
+
+    CastanyeraEntity findByIdAndPublicadoTrue(Long id);
+
 }

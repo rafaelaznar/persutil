@@ -8,7 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import net.ausiasmarch.persutil.entity.BlogEntity;
 import net.ausiasmarch.persutil.entity.CastanyeraEntity;
+import net.ausiasmarch.persutil.exception.ResourceNotFoundException;
+import net.ausiasmarch.persutil.exception.UnauthorizedException;
 import net.ausiasmarch.persutil.repository.CastanyeraRepository;
 
 @Service
@@ -19,6 +22,9 @@ public class CastanyeraService {
 
     @Autowired
     AleatorioService oAleatorioService;
+
+    @Autowired
+    SessionService oSessionService;
 
     ArrayList<String> alFrases = new ArrayList<>();
 
@@ -119,7 +125,7 @@ public Long rellenaCastanyera(Long numPosts) {
         
         // establecer visibilidad ALEATORIA (público o privado)
         boolean esPublico = oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1) == 1;
-        oCastanyeraEntity.setPublico(esPublico);
+        oCastanyeraEntity.setPublicado(esPublico);
         
         // guardar entity en base de datos
         oCastanyeraRepository.save(oCastanyeraEntity);
@@ -129,7 +135,15 @@ public Long rellenaCastanyera(Long numPosts) {
 
     // ----------------------------CRUD---------------------------------
     public CastanyeraEntity get(Long id) {
-        return oCastanyeraRepository.findById(id).orElseThrow(() -> new RuntimeException("Journal not found"));
+        if (oSessionService.isSessionActive()) {
+                 return oCastanyeraRepository.findById(id).orElseThrow(() -> new RuntimeException("Journal not found"));
+            } else{
+                CastanyeraEntity castanyeraEntity = oCastanyeraRepository.findByIdAndPublicadoTrue(id);
+                if (castanyeraEntity == null) {
+                    throw new ResourceNotFoundException("Post not found or not published");
+                }
+                return castanyeraEntity;
+            }
     }
 
     public Long create(CastanyeraEntity castanyeraEntity) {
@@ -137,8 +151,8 @@ public Long rellenaCastanyera(Long numPosts) {
     // mantener fecha_modificacion igual a la de creación para evitar NULL en BD
     castanyeraEntity.setFecha_modificacion(castanyeraEntity.getFecha_creacion());
         // si no se especifica, por defecto público
-        if (castanyeraEntity.getPublico() == null) {
-            castanyeraEntity.setPublico(true);
+        if (castanyeraEntity.getPublicado() == null) {
+            castanyeraEntity.setPublicado(true);
         }
         oCastanyeraRepository.save(castanyeraEntity);
         return castanyeraEntity.getId();
@@ -151,8 +165,8 @@ public Long rellenaCastanyera(Long numPosts) {
         existingCastanyera.setContenido(castanyeraEntity.getContenido());
         existingCastanyera.setEtiquetas(castanyeraEntity.getEtiquetas());
         // actualizar visibilidad si se proporciona
-        if (castanyeraEntity.getPublico() != null) {
-            existingCastanyera.setPublico(castanyeraEntity.getPublico());
+        if (castanyeraEntity.getPublicado() != null) {
+            existingCastanyera.setPublicado(castanyeraEntity.getPublicado());
         }
         existingCastanyera.setFecha_modificacion(LocalDateTime.now());
         oCastanyeraRepository.save(existingCastanyera);
@@ -165,22 +179,43 @@ public Long rellenaCastanyera(Long numPosts) {
     }
 
     public Page<CastanyeraEntity> getPage(Pageable oPageable) {
-        return oCastanyeraRepository.findAll(oPageable);
-    }
-
-    // obtener página con solo posts públicos
-    public Page<CastanyeraEntity> getPublicPage(Pageable oPageable) {
-        return oCastanyeraRepository.findByPublicoTrue(oPageable);
-    }
-
-    // contar solo posts públicos
-    public Long countPublic() {
-        return oCastanyeraRepository.countByPublicoTrue();
+       // si no hay session activa, solo devolver los publicados
+        if (!oSessionService.isSessionActive()) {
+            return oCastanyeraRepository.findByPublicadoTrue(oPageable);
+        } else {
+            return oCastanyeraRepository.findAll(oPageable);
+        }
     }
 
     public Long count() {
         return oCastanyeraRepository.count();
     }
+
+    // ---
+    public Long publicar(Long id) {
+        if (!oSessionService.isSessionActive()) {
+            throw new UnauthorizedException("No active session");
+        }
+        CastanyeraEntity existingCastanyera = oCastanyeraRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+        existingCastanyera.setPublicado(true);
+        existingCastanyera.setFecha_modificacion(LocalDateTime.now());
+        oCastanyeraRepository.save(existingCastanyera);
+        return existingCastanyera.getId();
+    }
+
+    public Long despublicar(Long id) {
+        if (!oSessionService.isSessionActive()) {
+            throw new UnauthorizedException("No active session");
+        }
+        CastanyeraEntity existingCastanyera = oCastanyeraRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+        existingCastanyera.setPublicado(false);
+        existingCastanyera.setFecha_modificacion(LocalDateTime.now());
+        oCastanyeraRepository.save(existingCastanyera);
+        return existingCastanyera.getId();
+    }
+
 
 
 }

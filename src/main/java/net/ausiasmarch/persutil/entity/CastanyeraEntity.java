@@ -12,11 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+ 
 @Entity
 @Table(name = "castanyera")
 @Getter
@@ -44,8 +45,8 @@ public class CastanyeraEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fecha_modificacion;
 
-    @NotNull
-    private Boolean publico;
+    @BooleanFlag
+    private Boolean publicado;
 
 }
 

@@ -75,20 +75,22 @@ public class CastanyeraApi {
         
     }
 
-    // listado paginado de posts públicos
-    @GetMapping("/publicos")
-    public ResponseEntity<Page<CastanyeraEntity>> getPublicPage(Pageable oPageable) {
-        return ResponseEntity.ok(oCastanyeraService.getPublicPage(oPageable));
-    }
-
-    @GetMapping("/publicos/count")
-    public ResponseEntity<Long> countPublic() {
-        return ResponseEntity.ok(oCastanyeraService.countPublic());
-    }
-
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         return ResponseEntity.ok(oCastanyeraService.count()); 
     }
 
+    // -----
+
+    // publicar post
+    @PutMapping("/publicar/{id}")
+    public ResponseEntity<Long> publicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oCastanyeraService.publicar(id));
+    }
+
+    // despublicar post
+    @PutMapping("/despublicar/{id}")
+    public ResponseEntity<Long> despublicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oCastanyeraService.despublicar(id));
+    }
 }
