@@ -8,11 +8,6 @@ import net.ausiasmarch.persutil.entity.CastanyeraEntity;
 
 public interface CastanyeraRepository extends JpaRepository<CastanyeraEntity, Long> {
 
-	// Devuelve solo las entidades marcadas como públicas
-	Page<CastanyeraEntity> findByPublicoTrue(Pageable pageable);
-
-	// Contador de entidades públicas
-	long countByPublicoTrue();
 
 	Page<CastanyeraEntity> findByPublicadoTrue(Pageable oPageable);
 
