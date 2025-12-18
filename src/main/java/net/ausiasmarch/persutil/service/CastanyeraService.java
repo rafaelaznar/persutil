@@ -124,7 +124,7 @@ public Long rellenaCastanyera(Long numPosts) {
         
         // establecer visibilidad ALEATORIA (público o privado)
         boolean esPublico = oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1) == 1;
-        oCastanyeraEntity.setPublicado(esPublico);
+        oCastanyeraEntity.setPublico(esPublico);
         
         // guardar entity en base de datos
         oCastanyeraRepository.save(oCastanyeraEntity);
@@ -137,7 +137,7 @@ public Long rellenaCastanyera(Long numPosts) {
         if (oSessionService.isSessionActive()) {
                  return oCastanyeraRepository.findById(id).orElseThrow(() -> new RuntimeException("Journal not found"));
             } else{
-                CastanyeraEntity castanyeraEntity = oCastanyeraRepository.findByIdAndPublicadoTrue(id);
+                CastanyeraEntity castanyeraEntity = oCastanyeraRepository.findByIdAndPublicoTrue(id);
                 if (castanyeraEntity == null) {
                     throw new ResourceNotFoundException("Post not found or not published");
                 }
@@ -150,8 +150,8 @@ public Long rellenaCastanyera(Long numPosts) {
     // mantener fecha_modificacion igual a la de creación para evitar NULL en BD
     castanyeraEntity.setFechaModificacion(castanyeraEntity.getFechaCreacion());
         // si no se especifica, por defecto público
-        if (castanyeraEntity.getPublicado() == null) {
-            castanyeraEntity.setPublicado(true);
+        if (castanyeraEntity.getPublico() == null) {
+            castanyeraEntity.setPublico(true);
         }
         oCastanyeraRepository.save(castanyeraEntity);
         return castanyeraEntity.getId();
@@ -164,8 +164,8 @@ public Long rellenaCastanyera(Long numPosts) {
         existingCastanyera.setContenido(castanyeraEntity.getContenido());
         existingCastanyera.setEtiquetas(castanyeraEntity.getEtiquetas());
         // actualizar visibilidad si se proporciona
-        if (castanyeraEntity.getPublicado() != null) {
-            existingCastanyera.setPublicado(castanyeraEntity.getPublicado());
+        if (castanyeraEntity.getPublico() != null) {
+            existingCastanyera.setPublico(castanyeraEntity.getPublico());
         }
         existingCastanyera.setFechaModificacion(LocalDateTime.now());
         oCastanyeraRepository.save(existingCastanyera);
@@ -180,7 +180,7 @@ public Long rellenaCastanyera(Long numPosts) {
     public Page<CastanyeraEntity> getPage(Pageable oPageable) {
        // si no hay session activa, solo devolver los publicados
         if (!oSessionService.isSessionActive()) {
-            return oCastanyeraRepository.findByPublicadoTrue(oPageable);
+            return oCastanyeraRepository.findByPublicoTrue(oPageable);
         } else {
             return oCastanyeraRepository.findAll(oPageable);
         }
@@ -197,7 +197,7 @@ public Long rellenaCastanyera(Long numPosts) {
         }
         CastanyeraEntity existingCastanyera = oCastanyeraRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
-        existingCastanyera.setPublicado(true);
+        existingCastanyera.setPublico(true);
         existingCastanyera.setFechaModificacion(LocalDateTime.now());
         oCastanyeraRepository.save(existingCastanyera);
         return existingCastanyera.getId();
@@ -209,7 +209,7 @@ public Long rellenaCastanyera(Long numPosts) {
         }
         CastanyeraEntity existingCastanyera = oCastanyeraRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
-        existingCastanyera.setPublicado(false);
+        existingCastanyera.setPublico(false);
         existingCastanyera.setFechaModificacion(LocalDateTime.now());
         oCastanyeraRepository.save(existingCastanyera);
         return existingCastanyera.getId();

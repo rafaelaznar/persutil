@@ -49,7 +49,7 @@ public class CastanyeraEntity {
     private LocalDateTime fechaModificacion;
 
     @BooleanFlag
-    private Boolean publicado;
+    private Boolean publico;
 
 }
 

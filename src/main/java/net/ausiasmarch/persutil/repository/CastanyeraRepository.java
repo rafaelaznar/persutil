@@ -9,10 +9,10 @@ import net.ausiasmarch.persutil.entity.CastanyeraEntity;
 public interface CastanyeraRepository extends JpaRepository<CastanyeraEntity, Long> {
 
 
-	Page<CastanyeraEntity> findByPublicadoTrue(Pageable oPageable);
+	Page<CastanyeraEntity> findByPublicoTrue(Pageable oPageable);
 
-    Page<CastanyeraEntity> findByPublicadoFalse(Pageable oPageable);
+    Page<CastanyeraEntity> findByPublicoFalse(Pageable oPageable);
 
-    CastanyeraEntity findByIdAndPublicadoTrue(Long id);
+    CastanyeraEntity findByIdAndPublicoTrue(Long id);
 
 }
