@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import net.ausiasmarch.persutil.entity.BlogEntity;
 import net.ausiasmarch.persutil.entity.CastanyeraEntity;
 import net.ausiasmarch.persutil.exception.ResourceNotFoundException;
 import net.ausiasmarch.persutil.exception.UnauthorizedException;
@@ -119,9 +118,9 @@ public Long rellenaCastanyera(Long numPosts) {
         oCastanyeraEntity.setEtiquetas(etiquetas);
         
         // establecer fecha de creación y modificación
-        oCastanyeraEntity.setFecha_creacion(LocalDateTime.now());
+        oCastanyeraEntity.setFechaCreacion(LocalDateTime.now());
         // evitar insertar NULL en la columna fecha_modificacion (DB la marca NOT NULL)
-        oCastanyeraEntity.setFecha_modificacion(oCastanyeraEntity.getFecha_creacion());
+        oCastanyeraEntity.setFechaModificacion(oCastanyeraEntity.getFechaCreacion());
         
         // establecer visibilidad ALEATORIA (público o privado)
         boolean esPublico = oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1) == 1;
@@ -147,9 +146,9 @@ public Long rellenaCastanyera(Long numPosts) {
     }
 
     public Long create(CastanyeraEntity castanyeraEntity) {
-    castanyeraEntity.setFecha_creacion(LocalDateTime.now());
+    castanyeraEntity.setFechaCreacion(LocalDateTime.now());
     // mantener fecha_modificacion igual a la de creación para evitar NULL en BD
-    castanyeraEntity.setFecha_modificacion(castanyeraEntity.getFecha_creacion());
+    castanyeraEntity.setFechaModificacion(castanyeraEntity.getFechaCreacion());
         // si no se especifica, por defecto público
         if (castanyeraEntity.getPublicado() == null) {
             castanyeraEntity.setPublicado(true);
@@ -168,7 +167,7 @@ public Long rellenaCastanyera(Long numPosts) {
         if (castanyeraEntity.getPublicado() != null) {
             existingCastanyera.setPublicado(castanyeraEntity.getPublicado());
         }
-        existingCastanyera.setFecha_modificacion(LocalDateTime.now());
+        existingCastanyera.setFechaModificacion(LocalDateTime.now());
         oCastanyeraRepository.save(existingCastanyera);
         return existingCastanyera.getId();
     }
@@ -199,7 +198,7 @@ public Long rellenaCastanyera(Long numPosts) {
         CastanyeraEntity existingCastanyera = oCastanyeraRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
         existingCastanyera.setPublicado(true);
-        existingCastanyera.setFecha_modificacion(LocalDateTime.now());
+        existingCastanyera.setFechaModificacion(LocalDateTime.now());
         oCastanyeraRepository.save(existingCastanyera);
         return existingCastanyera.getId();
     }
@@ -211,7 +210,7 @@ public Long rellenaCastanyera(Long numPosts) {
         CastanyeraEntity existingCastanyera = oCastanyeraRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
         existingCastanyera.setPublicado(false);
-        existingCastanyera.setFecha_modificacion(LocalDateTime.now());
+        existingCastanyera.setFechaModificacion(LocalDateTime.now());
         oCastanyeraRepository.save(existingCastanyera);
         return existingCastanyera.getId();
     }
