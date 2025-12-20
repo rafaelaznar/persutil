@@ -1,3 +1,4 @@
+
 package net.ausiasmarch.persutil.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,30 @@ public class ContrerasApi {
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         return ResponseEntity.ok(oContrerasService.count()); 
+    }
+    
+    // publicar post
+    @PutMapping("/publicar/{id}")
+    public ResponseEntity<Long> publicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oContrerasService.publicar(id));
+    }
+
+    // despublicar post
+    @PutMapping("/despublicar/{id}")
+    public ResponseEntity<Long> despublicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oContrerasService.despublicar(id));
+    }
+
+    // rellenar datos fake
+    @GetMapping("/rellena/{numPosts}")
+    public ResponseEntity<Long> rellenaContreras(@PathVariable Long numPosts) {
+        return ResponseEntity.ok(oContrerasService.rellenaContreras(numPosts));
+    }
+
+    // Borrar todos los posts
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAll() {
+        oContrerasService.deleteAll();
+        return ResponseEntity.noContent().build();
     }
 }
