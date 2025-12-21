@@ -53,6 +53,11 @@ public class AlcanyizApi{
         return ResponseEntity.ok(oAlcanyizService.delete(id));
     }
 
+    @DeleteMapping("/empty")
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oAlcanyizService.empty());
+    }
+
     // listado paginado de posts
     @GetMapping("")
     public ResponseEntity<Page<AlcanyizEntity>> getPage(Pageable oPageable) {
@@ -69,5 +74,15 @@ public class AlcanyizApi{
             @PathVariable Long numPosts
     ) {
         return ResponseEntity.ok(oAlcanyizService.rellenaQuestions(numPosts));
+    }
+
+    @PutMapping("/publicar/{id}")
+    public ResponseEntity<Long> publicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oAlcanyizService.publicar(id));
+    }
+
+    @PutMapping("/despublicar/{id}")
+    public ResponseEntity<Long> despublicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oAlcanyizService.despublicar(id));
     }
 }
