@@ -113,7 +113,7 @@ public class SalinasService {
 
     public Page<SalinasEntity> getPage(Pageable oPageable) {
          if (!oSessionService.isSessionActive()) {
-            return oSalinasRepository.findByPublicado(null, oPageable);
+            return oSalinasRepository.findByPublicado(true, oPageable);
         }
         return oSalinasRepository.findAll(oPageable);
     }
