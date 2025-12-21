@@ -82,10 +82,8 @@ public class SalinasService {
         if (!oSessionService.isSessionActive()) {
             throw new UnauthorizedException("No active session");
         }
-        // fechaCreacion se asigna automáticamente con @PrePersist
-        if (salinasEntity.isPublicado()) {
-            salinasEntity.setPublicado(true);
-        }
+        salinasEntity.setFechaCreacion(LocalDateTime.now());
+        salinasEntity.setFechaModificacion(null);
         oSalinasRepository.save(salinasEntity);
         return salinasEntity.getId();
     }
