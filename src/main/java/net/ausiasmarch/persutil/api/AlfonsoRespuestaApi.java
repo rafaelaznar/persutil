@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.persutil.entity.AlfonsoRespuestaEntity;
@@ -69,12 +70,19 @@ public class AlfonsoRespuestaApi {
     }
 
     @GetMapping("")
-    public ResponseEntity<Page<AlfonsoRespuestaEntity>> getPage(Pageable pageable) {
-        return ResponseEntity.ok(oAlfonsoRespuestaService.getPage(pageable));
+    public ResponseEntity<Page<AlfonsoRespuestaEntity>> getPage(
+            @RequestParam(required = false) String filter,
+            Pageable pageable) {
+        return ResponseEntity.ok(oAlfonsoRespuestaService.getPage(filter, pageable));
     }
 
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         return ResponseEntity.ok(oAlfonsoRespuestaService.count());
+    }
+
+    @GetMapping("/count/visible")
+    public ResponseEntity<Long> countVisible() {
+        return ResponseEntity.ok(oAlfonsoRespuestaService.countVisible());
     }
 }

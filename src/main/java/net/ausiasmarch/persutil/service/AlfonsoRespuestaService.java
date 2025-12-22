@@ -128,16 +128,21 @@ public class AlfonsoRespuestaService {
         return id;
     }
 
-    public Page<AlfonsoRespuestaEntity> getPage(Pageable pageable) {
-        if (!oSessionService.isSessionActive()) {
-            return oAlfonsoRespuestaRepository.findByPublicadoTrue(pageable);
-        } else {
-            return oAlfonsoRespuestaRepository.findAll(pageable);
-        }
+    public Page<AlfonsoRespuestaEntity> getPage(String filter, Pageable pageable) {
+        boolean publishedOnly = !oSessionService.isSessionActive();
+        return oAlfonsoRespuestaRepository.search(filter, publishedOnly, pageable);
     }
 
     public Long count() {
         return oAlfonsoRespuestaRepository.count();
+    }
+
+    public Long countVisible() {
+        if (oSessionService.isSessionActive()) {
+            return oAlfonsoRespuestaRepository.count();
+        } else {
+            return oAlfonsoRespuestaRepository.countByPublicadoTrue();
+        }
     }
 
     public Long publicar(Long id) {
