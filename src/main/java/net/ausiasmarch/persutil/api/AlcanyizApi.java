@@ -35,19 +35,19 @@ public class AlcanyizApi{
         }
     }
 
-    // crear posts
+    // crear preguntas
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody AlcanyizEntity alcanyizEntity) {
         return ResponseEntity.ok(oAlcanyizService.create(alcanyizEntity));
     }
 
-    // modificar posts
+    // modificar preguntas
     @PutMapping("")
     public ResponseEntity<Long> update(@RequestBody AlcanyizEntity alcanyizEntity) {
         return ResponseEntity.ok(oAlcanyizService.update(alcanyizEntity));
     }
 
-    // borrar posts
+    // borrar preguntas
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         return ResponseEntity.ok(oAlcanyizService.delete(id));
@@ -58,7 +58,7 @@ public class AlcanyizApi{
         return ResponseEntity.ok(oAlcanyizService.empty());
     }
 
-    // listado paginado de posts
+    // listado paginado de preguntas
     @GetMapping("")
     public ResponseEntity<Page<AlcanyizEntity>> getPage(Pageable oPageable) {
         return ResponseEntity.ok(oAlcanyizService.getPage(oPageable));
@@ -69,11 +69,11 @@ public class AlcanyizApi{
         return ResponseEntity.ok(oAlcanyizService.count()); 
     }
 
-    @GetMapping("/rellena/{numPosts}")
-    public ResponseEntity<Long> rellenaBlog(
-            @PathVariable Long numPosts
+    @GetMapping("/rellena/{numQuestions}")
+    public ResponseEntity<Long> rellenaQuestions(
+            @PathVariable Long numQuestions
     ) {
-        return ResponseEntity.ok(oAlcanyizService.rellenaQuestions(numPosts));
+        return ResponseEntity.ok(oAlcanyizService.rellenaQuestions(numQuestions));
     }
 
     @PutMapping("/publicar/{id}")

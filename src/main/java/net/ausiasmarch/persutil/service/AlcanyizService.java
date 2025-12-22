@@ -131,7 +131,7 @@ public class AlcanyizService {
             throw new UnauthorizedException("Sesión no iniciada");
         }
         AlcanyizEntity existingAlcanyiz = oAlcanyizRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
         existingAlcanyiz.setPublicado(true);
         existingAlcanyiz.setModify_date(LocalDateTime.now());
         oAlcanyizRepository.save(existingAlcanyiz);
@@ -143,7 +143,7 @@ public class AlcanyizService {
             throw new UnauthorizedException("Sesión no iniciada");
         }
         AlcanyizEntity existingAlcanyiz = oAlcanyizRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
         existingAlcanyiz.setPublicado(false);
         existingAlcanyiz.setModify_date(LocalDateTime.now());
         oAlcanyizRepository.save(existingAlcanyiz);
