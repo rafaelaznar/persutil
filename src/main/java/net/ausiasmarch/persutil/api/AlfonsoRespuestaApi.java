@@ -30,6 +30,12 @@ public class AlfonsoRespuestaApi {
         return ResponseEntity.ok(oAlfonsoRespuestaService.rellenaRespuestas(cantidad));
     }
 
+    // vaciar tabla (solo administradores)
+    @DeleteMapping("/empty")
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oAlfonsoRespuestaService.empty());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AlfonsoRespuestaEntity> get(@PathVariable Long id) {
         return ResponseEntity.ok(oAlfonsoRespuestaService.get(id));
@@ -48,6 +54,18 @@ public class AlfonsoRespuestaApi {
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         return ResponseEntity.ok(oAlfonsoRespuestaService.delete(id));
+    }
+
+    // publicar
+    @PutMapping("/publicar/{id}")
+    public ResponseEntity<Long> publicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oAlfonsoRespuestaService.publicar(id));
+    }
+
+    // despublicar
+    @PutMapping("/despublicar/{id}")
+    public ResponseEntity<Long> despublicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oAlfonsoRespuestaService.despublicar(id));
     }
 
     @GetMapping("")
