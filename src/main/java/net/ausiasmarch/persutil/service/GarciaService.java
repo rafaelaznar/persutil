@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.ausiasmarch.persutil.entity.GarciaEntity;
-import net.ausiasmarch.persutil.entity.GarciaEntity;
 import net.ausiasmarch.persutil.exception.ResourceNotFoundException;
 import net.ausiasmarch.persutil.exception.UnauthorizedException;
 import net.ausiasmarch.persutil.repository.GarciaRepository;
@@ -74,8 +73,8 @@ public class GarciaService {
             garciaEntity.setProgreso("Sin progreso");
         }
 
-        if (garciaEntity.getPublicado() == null) {
-            garciaEntity.setPublicado(false);
+        if (garciaEntity.getPublico() == null) {
+            garciaEntity.setPublico(false);
         }
 
         GarciaRepository.save(garciaEntity);
@@ -104,8 +103,8 @@ public class GarciaService {
                 ? garciaEntity.getFechaFinal()
                 : existingGarcia.getFechaFinal());
 
-        if (garciaEntity.getPublicado() != null) {
-            existingGarcia.setPublicado(garciaEntity.getPublicado());
+        if (garciaEntity.getPublico() != null) {
+            existingGarcia.setPublico(garciaEntity.getPublico());
         }
 
         GarciaRepository.save(existingGarcia);
@@ -135,21 +134,21 @@ public class GarciaService {
             garciaEntity.setProgreso(PROGRESOS[indiceAleatorio]);
             garciaEntity.setFechaInicio(LocalDateTime.now());
             garciaEntity.setFechaFinal(LocalDate.now().plusDays(random.nextInt(90)));
-            garciaEntity.setPublicado(random.nextBoolean());
+            garciaEntity.setPublico(random.nextBoolean());
 
             GarciaRepository.save(garciaEntity);
         }
         return cantidad;
     }
 
-    public Page<GarciaEntity> getPagePublicados(Pageable oPageable) {
-        return GarciaRepository.findByPublicado(true, oPageable);
+    public Page<GarciaEntity> getPagePublico(Pageable oPageable) {
+        return GarciaRepository.findByPublico(true, oPageable);
     }
 
     public Long publicar(Long id) {
         GarciaEntity existingGarcia = GarciaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
-        existingGarcia.setPublicado(true);
+        existingGarcia.setPublico(true);
         existingGarcia.setFechaModificacion(LocalDateTime.now());
         GarciaRepository.save(existingGarcia);
         return existingGarcia.getId();
@@ -158,7 +157,7 @@ public class GarciaService {
     public Long despublicar(Long id) {
         GarciaEntity existingGarcia = GarciaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
-        existingGarcia.setPublicado(false);
+        existingGarcia.setPublico(false);
         existingGarcia.setFechaModificacion(LocalDateTime.now());
         GarciaRepository.save(existingGarcia);
         return existingGarcia.getId();

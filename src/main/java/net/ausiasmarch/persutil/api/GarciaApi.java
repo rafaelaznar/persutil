@@ -74,9 +74,9 @@ public class GarciaApi {
         return ResponseEntity.ok(GarciaService.count());
     }
 
-    @GetMapping("/publicados")
-    public ResponseEntity<Page<GarciaEntity>> getPagePublicados(Pageable oPageable) {
-        return ResponseEntity.ok(GarciaService.getPagePublicados(oPageable));
+    @GetMapping("/publico")
+    public ResponseEntity<Page<GarciaEntity>> getPagePublico(Pageable oPageable) {
+        return ResponseEntity.ok(GarciaService.getPagePublico(oPageable));
     }
 
     @PutMapping("/publicar/{id}")

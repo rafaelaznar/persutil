@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import net.ausiasmarch.persutil.entity.GarciaEntity;
 
 public interface GarciaRepository extends JpaRepository<GarciaEntity, Long> {
-    Page<GarciaEntity> findByPublicado(Boolean publicado, Pageable pageable);
+    Page<GarciaEntity> findByPublico(Boolean publicado, Pageable pageable);
 }

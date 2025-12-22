@@ -38,7 +38,7 @@ public class GarciaEntity {
     @Size(min = 5, max = 1000)
     private String progreso;
     @NotNull
-    private Boolean publicado;
+    private Boolean publico;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaInicio;
