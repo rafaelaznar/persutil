@@ -73,8 +73,8 @@ public class ContrerasService {
 
     private ArrayList<String> obtenerTitulos() {
         ArrayList<String> titulos = new ArrayList<>();
-        titulos.add("La teoría de la relatividad");
-        titulos.add("El Renacimiento italiano");
+        titulos.add("los melocotones");
+        titulos.add("smash or pass");
         titulos.add("La revolución digital");
         titulos.add("El origen del universo");
         titulos.add("La historia de la imprenta");
@@ -88,8 +88,8 @@ public class ContrerasService {
 
     private ArrayList<String> obtenerContenidos() {
         ArrayList<String> contenidos = new ArrayList<>();
-        contenidos.add("Albert Einstein revolucionó la física con la teoría de la relatividad, cambiando nuestra comprensión del espacio y el tiempo.");
-        contenidos.add("El Renacimiento fue una época de esplendor artístico y científico en Italia, con figuras como Leonardo da Vinci y Miguel Ángel.");
+        contenidos.add("¿Por qué los melocotones son tan populares en los memes? Descúbrelo aquí.");
+        contenidos.add("¿Smash or pass? El debate definitivo sobre personajes de videojuegos.");
         contenidos.add("La revolución digital ha transformado la comunicación, la economía y la vida cotidiana en todo el mundo.");
         contenidos.add("El origen del universo es estudiado por la cosmología, destacando teorías como el Big Bang.");
         contenidos.add("La invención de la imprenta por Gutenberg permitió la difusión masiva del conocimiento en Europa.");
@@ -140,6 +140,11 @@ public class ContrerasService {
 
     public Page<ContrerasEntity> getPage(Pageable oPageable) {
         return oContrerasRepository.findAll(oPageable);
+    }
+
+    // Filtrar por publico
+    public Page<ContrerasEntity> getPageByPublico(boolean publico, Pageable oPageable) {
+        return oContrerasRepository.findByPublico(publico, oPageable);
     }
 
     public Long count() {

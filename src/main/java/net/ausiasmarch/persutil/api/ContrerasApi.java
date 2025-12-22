@@ -52,11 +52,17 @@ public class ContrerasApi {
         return ResponseEntity.ok(oContrerasService.delete(id));
     }
 
-    // listado paginado de posts
+
+    // listar posts publicos (no login)
     @GetMapping("")
-    public ResponseEntity<Page<ContrerasEntity>> getPage(Pageable oPageable) {
+    public ResponseEntity<Page<ContrerasEntity>> getPagePublicos(Pageable oPageable) {
+        return ResponseEntity.ok(oContrerasService.getPageByPublico(true, oPageable));
+    }
+
+    // listar todos los posts
+    @GetMapping("/admin")
+    public ResponseEntity<Page<ContrerasEntity>> getPageAdmin(Pageable oPageable) {
         return ResponseEntity.ok(oContrerasService.getPage(oPageable));
-        
     }
 
     @GetMapping("/count")
@@ -76,7 +82,7 @@ public class ContrerasApi {
         return ResponseEntity.ok(oContrerasService.despublicar(id));
     }
 
-    // rellenar datos fake
+    // Rellenar posts
     @GetMapping("/rellena/{numPosts}")
     public ResponseEntity<Long> rellenaContreras(@PathVariable Long numPosts) {
         return ResponseEntity.ok(oContrerasService.rellenaContreras(numPosts));
