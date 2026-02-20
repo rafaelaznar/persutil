@@ -30,7 +30,8 @@ CREATE TABLE `alcalde` (
   `valoracion` int NOT NULL,
   `publicado` tinyint(1) NOT NULL DEFAULT '1',
   `destacado` tinyint(1) NOT NULL DEFAULT '0',
-  `fecha_lectura` date NOT NULL
+  `fecha_creacion` datetime DEFAULT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 -- --------------------------------------------------------
@@ -156,8 +157,10 @@ CREATE TABLE `garcia` (
   `titulo` varchar(1000) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `objetivo` varchar(1000) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `fecha_inicio` datetime NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
   `fecha_final` datetime NOT NULL,
-  `progreso` varchar(1000) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL
+  `progreso` varchar(1000) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `publico` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 -- --------------------------------------------------------
@@ -190,6 +193,8 @@ CREATE TABLE `jspreguntas` (
   `answer3` varchar(255) CHARACTER SET utf16 COLLATE utf16_unicode_ci NOT NULL,
   `answer4` varchar(255) CHARACTER SET utf16 COLLATE utf16_unicode_ci NOT NULL,
   `correct` tinyint NOT NULL,
+  `publicado` tinyint(1) NOT NULL,
+  `tema` varchar(255) COLLATE utf16_unicode_ci NOT NULL,
   `create_date` datetime NOT NULL,
   `modify_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
@@ -220,6 +225,7 @@ CREATE TABLE `receta` (
   `nombre` varchar(1024) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `ingredientes` longtext CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `preparacion` longtext CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `publicado` tinyint(1) NOT NULL,
   `fecha_creacion` datetime NOT NULL,
   `fecha_modificacion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
@@ -247,11 +253,13 @@ CREATE TABLE `recurso` (
 
 CREATE TABLE `sempertegui_pelicula` (
   `id` bigint NOT NULL,
-  `nombre` varchar(255) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
-  `genero` varchar(255) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `titulo` varchar(255) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `generos` varchar(255) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `sinopsis` varchar(1024) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `director` varchar(255) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `puntuacion` int NOT NULL,
   `anyo` year NOT NULL,
+  `publicado` tinyint NOT NULL DEFAULT '0',
   `fecha_creacion` datetime NOT NULL,
   `fecha_modificacion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
@@ -305,7 +313,7 @@ CREATE TABLE `uski_libro_visita` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `zanon`
+-- Estructura de tabla para la tabla `zanon`
 --
 
 CREATE TABLE `zanon` (
@@ -317,7 +325,8 @@ CREATE TABLE `zanon` (
   `fecha_modificacion` datetime DEFAULT NULL,
   `duracion` int NOT NULL,
   `dificultad` enum('baja','media','alta') CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
-  `publico` tinyint(1) NOT NULL
+  `publico` tinyint(1) NOT NULL,
+  `imagen` varchar(255) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 --
@@ -412,8 +421,7 @@ ALTER TABLE `recurso`
 -- Indexes for table `sempertegui_pelicula`
 --
 ALTER TABLE `sempertegui_pelicula`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `soares`
@@ -434,7 +442,7 @@ ALTER TABLE `uski_libro_visita`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `zanon`
+-- Indices de la tabla `zanon`
 --
 ALTER TABLE `zanon`
   ADD PRIMARY KEY (`id`);
@@ -552,7 +560,7 @@ ALTER TABLE `uski_libro_visita`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `zanon`
+-- AUTO_INCREMENT de la tabla `zanon`
 --
 ALTER TABLE `zanon`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;

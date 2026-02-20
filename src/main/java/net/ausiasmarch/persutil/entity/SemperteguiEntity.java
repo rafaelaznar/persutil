@@ -14,6 +14,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jdk.jfr.BooleanFlag;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,11 +30,15 @@ public class SemperteguiEntity {
 
     @NotNull
     @Size(min=2, max=255)
-    private String nombre;
+    private String titulo;
 
     @NotNull
     @Size(min=3, max=255)
-    private String genero;
+    private String generos;
+
+    @NotNull
+    @Size(min=10, max=1024)
+    private String sinopsis;
 
     @NotNull
     @Size(min=3, max=255)
@@ -47,6 +52,9 @@ public class SemperteguiEntity {
     @Max(2155)
     private int anyo;
 
+    @BooleanFlag
+    private Boolean publicado;
+    
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape=JsonFormat.Shape.STRING)
     private LocalDateTime fechaCreacion;
